@@ -3,20 +3,26 @@ import Todo from "./Todo";
 
 const Form = () => {
 
-    const [todo, setTodo] = useState({})
+    const [todo, setTodo] = useState()
 
     const [todos, setTodos] = useState([
-        {todo: 'todo 1'},
-        {todo: 'todo 2'},
-        {todo: 'todo 3'}
+        {
+            product: 'todo 1',
+            order: 1
+        },
+        {
+            product: 'todo 2',
+            order: 2
+        },
+        {
+            product: 'todo 3',
+            order: 3
+        }
     ])
 
-    const handleChange = e => setTodo({[e.target.name] : e.target.value})
-    const handleClick = e => {
-        if(Object.keys(todo).length === 0 || todo.todo.trim() === '') {
-            alert('El campo no puede estar vacio.')
-            return
-        }
+    const handleChange = e => setTodo({...todo, [e.target.name] : e.target.value})
+    const handleClickTask = e =>  {
+        console.log(todo)
         setTodos([...todos, todo])
     }
 
@@ -30,11 +36,12 @@ const Form = () => {
         <>
             <form onSubmit={e => e.preventDefault()}>
                 <label>Agregar tareas</label><br />
-                <input type="text" name="todo" onChange={handleChange} />
-                <button onClick={handleClick}>Agregar</button>
+                <input type="text" name="product" onChange={handleChange} />
+                <input type="text" name="order" onChange={handleChange} />
+                <button onClick={handleClickTask}>Agregar</button>
             </form>
             {
-                todos.map((value, index) => (<Todo todo={value.todo} index={index} deleteTodo={deleteTodo}/>))
+                todos.map((value, index) => (<Todo todo={value.product} key={index} order={value.order} index={index} deleteTodo={deleteTodo}/>))
             }            
         </>
     )
